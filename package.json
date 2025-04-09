@@ -1,0 +1,36 @@
+{
+  "name": "mo",
+  "version": "1.0.0",
+  "description": "MO - Media Organizer",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "dist": "electron-builder --win --x64",
+    "dist:all": "electron-builder --win --x64 --mac --linux",
+    "dist:mac": "electron-builder --mac --x64",
+    "dist:linux": "electron-builder --linux --x64",
+    "dist:win": "electron-builder --win --x64",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melpadden/mo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/melpadden/mo/issues"
+  },
+  "homepage": "https://github.com/melpadden/mo#readme",
+  "devDependencies": {
+    "electron": "^35.1.4"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "mime": "^4.0.7",
+    "path": "^0.12.7"
+  }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Organizer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    #tree-view { width: 30%; float: left; border-right: 1px solid #ccc; padding: 10px; }
+    #media-player { width: 70%; float: left; padding: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { cursor: pointer; margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <div id="tree-view">
+    <button id="select-folder">Select Folder</button>
+    <ul id="folder-structure"></ul>
+  </div>
+  <div id="media-player">
+    <h3>Media Player</h3>
+    <video id="video-player" controls style="width: 100%; display: none;"></video>
+    <audio id="audio-player" controls style="width: 100%; display: none;"></audio>
+  </div>
+
+  <script>
+    const folderStructure = document.getElementById('folder-structure');
+    const videoPlayer = document.getElementById('video-player');
+    const audioPlayer = document.getElementById('audio-player');
+
+    document.getElementById('select-folder').addEventListener('click', async () => {
+      const result = await window.api.selectFolder();
+      if (!result) return;
+
+      folderStructure.innerHTML = '';
+      result.files.forEach((file) => {
+        const li = document.createElement('li');
+        li.textContent = file.name;
+        li.dataset.path = file.path;
+        li.dataset.isDirectory = file.isDirectory;
+        li.addEventListener('click', () => {
+          if (file.isDirectory) return;
+
+          const mime = file.name.endsWith('.mp4') ? 'video' : file.name.endsWith('.mp3') ? 'audio' : null;
+          if (mime === 'video') {
+            videoPlayer.src = file.path;
+            videoPlayer.style.display = 'block';
+            audioPlayer.style.display = 'none';
+          } else if (mime === 'audio') {
+            audioPlayer.src = file.path;
+            audioPlayer.style.display = 'block';
+            videoPlayer.style.display = 'none';
+          }
+        });
+        folderStructure.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
