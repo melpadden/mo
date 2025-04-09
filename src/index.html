@@ -29,6 +29,7 @@
     const audioPlayer = document.getElementById('audio-player');
 
     document.getElementById('select-folder').addEventListener('click', async () => {
+      console.log('Select Folder button clicked');
       const result = await window.api.selectFolder();
       if (!result) return;
 
